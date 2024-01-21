@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "code for expiriment", "code for expiriment\code for expiriment.csproj", "{AEF05533-32C5-4319-8A80-4769E7363333}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEF05533-32C5-4319-8A80-4769E7363333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF05533-32C5-4319-8A80-4769E7363333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF05533-32C5-4319-8A80-4769E7363333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF05533-32C5-4319-8A80-4769E7363333}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B13E997B-58F7-44F8-9631-D29A7EDD5182}
+	EndGlobalSection
+EndGlobal

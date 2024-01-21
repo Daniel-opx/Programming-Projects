@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IEnumarable implementation", "IEnumarable implementation\IEnumarable implementation.csproj", "{01F9B06D-15C9-41F2-9706-D6CE173A3EF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avi's task", "Avi's task\Avi's task.csproj", "{9A9B86D9-2639-45C2-96CA-036423D587FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01F9B06D-15C9-41F2-9706-D6CE173A3EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F9B06D-15C9-41F2-9706-D6CE173A3EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F9B06D-15C9-41F2-9706-D6CE173A3EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F9B06D-15C9-41F2-9706-D6CE173A3EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A9B86D9-2639-45C2-96CA-036423D587FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A9B86D9-2639-45C2-96CA-036423D587FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A9B86D9-2639-45C2-96CA-036423D587FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A9B86D9-2639-45C2-96CA-036423D587FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7BC9754-8759-4C7D-B301-FE5C7F29B273}
+	EndGlobalSection
+EndGlobal
