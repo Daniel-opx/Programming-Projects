@@ -23,7 +23,7 @@ namespace Avi_s_task
         public MyList() { }
         public IEnumerator<T> GetEnumerator()
         {
-            return (IEnumerator<T>)new MyListEnumerator<T>(list);
+            return new MyListEnumerator<T>(list);
         }
        
 
@@ -45,7 +45,7 @@ namespace Avi_s_task
             list = TheList;
         }
             
-        private T _current;
+        
         public T Current 
         {
             get
