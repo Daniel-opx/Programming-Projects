@@ -44,5 +44,17 @@ namespace puzzle_3
 
         }
 
+        public bool isCorrdinatesWithinBounds(int i,int j)
+        {
+            if(j > SecondDimensionLength || i > FirstDimensionLength || i < 0 || j < 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        
+
     }
 }
