@@ -51,15 +51,28 @@ namespace puzzle_3
 
             charMatrixLinq = arrayHandler.array2D;
 
-
+            var currentNumber = new List<int>();
             for(int i = 0;i < 40;i++)
             {
                 for(int j = 0;j < charMatrixLinq.GetLength(1);j++)
                 {
+                    //https://stackoverflow.com/questions/239103/convert-char-to-int-in-c-sharp - char to int conversion stackoverflow
                     char currentChar = charMatrixLinq[i,j];
                     if(currentChar.isDigit())
                     {
-                        Console.WriteLine($"the index of this number is {i},{j} and the number is {currentChar} ");
+                        currentNumber.Add(currentChar - '0');
+                    }
+                    else
+                    {
+                        if(currentNumber.Count>0)
+                        {
+                            int powerOften = currentNumber.Count-1;
+                            var num =currentNumber.Aggregate(0,(acc, current) =>
+                            {
+                                acc = current * (int)Math.Pow(10, powerOften--) + acc;
+                                return acc;
+                            });
+                        }
                     }
                 }
             }
