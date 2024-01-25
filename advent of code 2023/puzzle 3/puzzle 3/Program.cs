@@ -28,6 +28,38 @@ namespace puzzle_3
                     j++;
                 }
             }
+            var secondArray = new char[numOfLines, numOfCharsInLine];
+            var arrayHandler = new ArrayHandler2D(secondArray);
+
+            File.ReadAllBytes(path).Aggregate(secondArray, (acc, current) =>
+            {
+                arrayHandler.Add((char)current);
+                return acc;
+            });
+
+            secondArray = arrayHandler.array2D;
+
+            var lengthat0 = secondArray.GetLength(0);
+            var lengthat1 = secondArray.GetLength(1);
+
+            
+            foreach (var item in secondArray)
+            {
+               
+                Console.Write(item);
+              
+            }
+            Console.WriteLine("now printing the char matrix with loop char[][]=============================================");
+            for (int i = 0; i < charMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < charMatrix.GetLength(1); j++)
+                {
+                    Console.Write(charMatrix[i, j]);
+                }
+
+            }
+
+
 
             Console.WriteLine("sd");
 
