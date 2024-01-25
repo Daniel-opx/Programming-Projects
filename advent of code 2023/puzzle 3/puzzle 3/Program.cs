@@ -1,12 +1,24 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using static System.Math;
+using static puzzle_3.RegexStrings;
 
 namespace puzzle_3
 {
     internal class Program
     {
+        static int ListToInt(List<int> list)
+        {
+            int powerOften = list.Count - 1;
+            var num = list.Aggregate(0, (acc, current) =>
+            {
+                acc = current * (int)Math.Pow(10, powerOften--) + acc;
+                return acc;
+            });
+            list.RemoveRange(0, list.Count);
+            return num;
+        }
 
-        
         static void Main(string[] args)
         {
             string path = "C:\\Programming Projects\\advent of code 2023\\puzzle 3\\puzzle 3\\input.txt";
@@ -35,8 +47,8 @@ namespace puzzle_3
             //}
 
 
-            int numOfLines = File.ReadAllLines(path).Length;
-            int numOfCharsInLine = File.ReadAllLines(path)[0].Length;
+            int numOfLines = File.ReadAllLines(path).Length; //number of strings in the input file
+            int numOfCharsInLine = File.ReadAllLines(path)[0].Length; // number of chars in each line /string- 140 cahrs in each string in input
             
 
             var charMatrixLinq = new char[numOfLines, numOfCharsInLine];
@@ -50,8 +62,8 @@ namespace puzzle_3
             });
 
             charMatrixLinq = arrayHandler.array2D;
-
-            var currentNumber = new List<int>();
+            
+            var currentNumberList = new List<int>();
             for(int i = 0;i < 40;i++)
             {
                 for(int j = 0;j < charMatrixLinq.GetLength(1);j++)
@@ -60,19 +72,23 @@ namespace puzzle_3
                     char currentChar = charMatrixLinq[i,j];
                     if(currentChar.isDigit())
                     {
-                        currentNumber.Add(currentChar - '0');
+                        Console.Write(currentChar);
+                        currentNumberList.Add(currentChar - '0');
                     }
                     else
                     {
-                        if(currentNumber.Count>0)
+                        Console.Write(currentChar);
+                        if (currentNumberList.Count>0)
                         {
-                            int powerOften = currentNumber.Count-1;
-                            var num =currentNumber.Aggregate(0,(acc, current) =>
-                            {
-                                acc = current * (int)Math.Pow(10, powerOften--) + acc;
-                                return acc;
-                            });
+                            
+                            int number = ListToInt(currentNumberList);
+                            int lengthOfNumber = (int)Log10(number)+1;
+                            
+
+
+
                         }
+
                     }
                 }
             }
