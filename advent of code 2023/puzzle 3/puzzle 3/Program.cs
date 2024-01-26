@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using static System.Math;
 using static puzzle_3.RegexStrings;
+using static puzzle_3.ExtentionMethods;
+using static puzzle_3.ArrayHandler2D;
 
 namespace puzzle_3
 {
@@ -24,7 +26,7 @@ namespace puzzle_3
             string path = "C:\\Programming Projects\\advent of code 2023\\puzzle 3\\puzzle 3\\input.txt";
 
 
-            char[,] charMatrix = new char[File.ReadAllLines(path).Length, File.ReadAllLines(path)[0].Length];
+            //char[,] charMatrix = new char[File.ReadAllLines(path).Length, File.ReadAllLines(path)[0].Length];
 
             //first way to parse the input- for loop
             //using (var reader = new StreamReader(path))
@@ -62,15 +64,16 @@ namespace puzzle_3
             });
 
             charMatrixLinq = arrayHandler.array2D;
-            
+            var ListOfIntForAggregate = new List<int>();
+
             var currentNumberList = new List<int>();
-            for(int i = 0;i < 40;i++)
+            for (int i = 0; i < 40; i++)
             {
-                for(int j = 0;j < charMatrixLinq.GetLength(1);j++)
+                for (int j = 0; j < charMatrixLinq.GetLength(1); j++)
                 {
                     //https://stackoverflow.com/questions/239103/convert-char-to-int-in-c-sharp - char to int conversion stackoverflow
-                    char currentChar = charMatrixLinq[i,j];
-                    if(currentChar.isDigit())
+                    char currentChar = charMatrixLinq[i, j];
+                    if (currentChar.isDigit())
                     {
                         Console.Write(currentChar);
                         currentNumberList.Add(currentChar - '0');
@@ -78,20 +81,34 @@ namespace puzzle_3
                     else
                     {
                         Console.Write(currentChar);
-                        if (currentNumberList.Count>0)
+                        if (currentNumberList.Count > 0)
                         {
-                            
-                            int number = ListToInt(currentNumberList);
-                            int lengthOfNumber = (int)Log10(number)+1;
-                            
 
+                            int number = ListToInt(currentNumberList);
+                            int lengthOfNumber = ExtentionMethods.IntLength(number);
+                            if(isSignAround(charMatrixLinq,i,j-lengthOfNumber,lengthOfNumber))
+                            {
+                                ListOfIntForAggregate.Add(number);
+                            }
 
 
                         }
-
                     }
                 }
             }
+            for (int i = 0; i < 8; i++)
+            {
+                for (global::System.Int32 j = 0; j < 8; j++)
+                {
+                    Console.Write($"({i},{j}) ");
+                }
+                Console.WriteLine("\n");
+
+            }
+            
+
+
+
         }
 
 

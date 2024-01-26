@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static puzzle_3.RegexStrings;
 
 namespace puzzle_3
 {
@@ -44,15 +45,44 @@ namespace puzzle_3
 
         }
 
-        public bool isCorrdinatesWithinBounds(int i,int j)
+         static public bool IsCorrdinatesWithinBounds(int i,int j, char[,] array )
         {
-            if(j > SecondDimensionLength || i > FirstDimensionLength || i < 0 || j < 0)
+            if(j > array.GetLength(1) || i > array.GetLength(0) || i < 0 || j < 0)
             {
                 return false;
             }
             return true;
         }
+        static public bool isSignAround(char[,] array2D,int i,int j,int numLength)
+        {
+            if(numLength < 1)
+            {
+                throw new ArgumentNullException(nameof(numLength),"the number in parmeter is below 1");
+            }
+            for (int lengthOffset = -1; lengthOffset < 2;lengthOffset++)
+            {
+                for(int widthOffset = -1; widthOffset < numLength ;widthOffset++)
+                {
+                   int iWithLengthOffset = i + lengthOffset;
+                    int jWithWidthOffset = j + widthOffset;
 
+                    if (!IsCorrdinatesWithinBounds(iWithLengthOffset, jWithWidthOffset, array2D))
+                        {
+                        continue;
+
+                    }
+                    
+                    if (RegexStrings.isSignRegex.IsMatch(Convert.ToString (array2D[iWithLengthOffset, jWithWidthOffset])))
+                        {
+                        return true;
+                    }
+                    
+
+                }
+                
+            }
+            return false;
+        }
 
         
 
