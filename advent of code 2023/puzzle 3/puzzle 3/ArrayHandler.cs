@@ -61,7 +61,7 @@ namespace puzzle_3
             }
             for (int lengthOffset = -1; lengthOffset < 2;lengthOffset++)
             {
-                for(int widthOffset = -1; widthOffset < numLength ;widthOffset++)
+                for(int widthOffset = -1; widthOffset < numLength+1 ;widthOffset++)
                 {
                    int iWithLengthOffset = i + lengthOffset;
                     int jWithWidthOffset = j + widthOffset;

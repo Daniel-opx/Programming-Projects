@@ -53,13 +53,17 @@ namespace puzzle_3
             int numOfCharsInLine = File.ReadAllLines(path)[0].Length; // number of chars in each line /string- 140 cahrs in each string in input
             
 
-            var charMatrixLinq = new char[numOfLines, numOfCharsInLine];
+            var charMatrixLinq = new char[numOfLines, numOfCharsInLine+2]; // the +2 is for the \r and \n in the end of each line in the input, beacuse it reads all the byutes from text file it reads also uneccessey thing line new line -\n and cartridge - \r
+            
             var arrayHandler = new ArrayHandler2D(charMatrixLinq);
             //second way- to use agrregate , the seed overload. the seed here is 2d char array so each 
             //iteration the aggregate use the array as the accumelator -the acc, and assign the current with the add function that i made
             File.ReadAllBytes(path).Aggregate(charMatrixLinq, (acc, current) =>
             {
-                arrayHandler.Add((char)current);
+                
+                    arrayHandler.Add((char)current);
+                
+
                 return acc;
             });
 
@@ -90,22 +94,15 @@ namespace puzzle_3
                             {
                                 ListOfIntForAggregate.Add(number);
                             }
-
-
                         }
                     }
                 }
             }
-            for (int i = 0; i < 8; i++)
-            {
-                for (global::System.Int32 j = 0; j < 8; j++)
-                {
-                    Console.Write($"({i},{j}) ");
-                }
-                Console.WriteLine("\n");
+            int sum = ListOfIntForAggregate.Aggregate((acc, current) => acc + current);
+            int sumWithZero = ListOfIntForAggregate.Aggregate(0, (acc, current) => acc + current);
+            Console.WriteLine($"the sum without the seed is : {sum}\nthe sum with the seed is {sumWithZero}");
 
-            }
-            
+
 
 
 

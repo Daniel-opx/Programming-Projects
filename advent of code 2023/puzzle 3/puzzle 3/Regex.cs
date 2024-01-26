@@ -9,7 +9,7 @@ namespace puzzle_3
 {
     internal class RegexStrings
     {
-        static public Regex isSignRegex = new Regex(@"[*@=/+\$\-&%]");
+        static public Regex isSignRegex = new Regex(@"[*@=/+\$\-&%#\\]");
 
     }
 }
