@@ -53,30 +53,33 @@ namespace puzzle_3
             int numOfCharsInLine = File.ReadAllLines(path)[0].Length; // number of chars in each line /string- 140 cahrs in each string in input
             
 
-            var charMatrixLinq = new char[numOfLines, numOfCharsInLine+2]; // the +2 is for the \r and \n in the end of each line in the input, beacuse it reads all the byutes from text file it reads also uneccessey thing line new line -\n and cartridge - \r
+            var charMatrix = new char[numOfLines, numOfCharsInLine+2]; // the +2 is for the \r and \n in the end of each line in the input, beacuse it reads all the byutes from text file it reads also uneccessey thing line new line -\n and cartridge - \r
             
-            var arrayHandler = new ArrayHandler2D(charMatrixLinq);
+            var charMatrixArrayHanlder = new ArrayHandler2D(charMatrix);
             //second way- to use agrregate , the seed overload. the seed here is 2d char array so each 
             //iteration the aggregate use the array as the accumelator -the acc, and assign the current with the add function that i made
-            File.ReadAllBytes(path).Aggregate(charMatrixLinq, (acc, current) =>
+            File.ReadAllBytes(path).Aggregate(charMatrix, (acc, current) =>
             {
                 
-                    arrayHandler.Add((char)current);
+                    charMatrixArrayHanlder.Add((char)current);
                 
 
                 return acc;
             });
 
-            charMatrixLinq = arrayHandler.array2D;
-            var ListOfIntForAggregate = new List<int>();
+            charMatrix = charMatrixArrayHanlder.array2D;
+            var ListOfIntForSumAgrregate = new List<int>(); 
 
-            var currentNumberList = new List<int>();
-            for (int i = 0; i < numOfLines; i++)
+            var currentNumberList = new List<int>(); //list that will go through the listtoint function and convert the list to one int.
+
+            
+            
+            for (int i = 0; i < numOfLines; i++) // logic for first part of puzzle- sum of all numbers that adjacent to signs  
             {
-                for (int j = 0; j < charMatrixLinq.GetLength(1); j++)
+                for (int j = 0; j < charMatrix.GetLength(1); j++)
                 {
                     //https://stackoverflow.com/questions/239103/convert-char-to-int-in-c-sharp - char to int conversion stackoverflow
-                    char currentChar = charMatrixLinq[i, j];
+                    char currentChar = charMatrix[i, j];
                     if (currentChar.isDigit())
                     {
                         Console.Write(currentChar);
@@ -90,18 +93,40 @@ namespace puzzle_3
 
                             int number = ListToInt(currentNumberList);
                             int lengthOfNumber = ExtentionMethods.IntLength(number);
-                            if(isSignAround(charMatrixLinq,i,j-lengthOfNumber,lengthOfNumber))
+                            if(isSignAround(charMatrix,i,j-lengthOfNumber,lengthOfNumber))
                             {
-                                ListOfIntForAggregate.Add(number);
+                                ListOfIntForSumAgrregate.Add(number);
                             }
                         }
                     }
                 }
             }
-            int sum = ListOfIntForAggregate.Aggregate((acc, current) => acc + current);
-            int sumWithZero = ListOfIntForAggregate.Aggregate(0, (acc, current) => acc + current);
-            Console.WriteLine($"the sum without the seed is : {sum}\nthe sum with the seed is {sumWithZero}");
+            int sum = ListOfIntForSumAgrregate.Aggregate((acc, current) => acc + current);
+           
+            Console.WriteLine($"the sum without the seed is : {sum}");
 
+
+            for (int i = 0; i < numOfLines; i++)
+            {
+                for (int j = 0; j < charMatrix.GetLength(1); j++)
+                {
+                    char currentChar = charMatrix[i, j];
+                    if (currentChar.Equals('*'))
+                    {
+                        //travel up and find number
+                        //if(isNumberAdjacentUp)
+
+
+
+
+
+
+
+
+                        //travel down and find number
+                    }
+                }
+            }
 
 
 

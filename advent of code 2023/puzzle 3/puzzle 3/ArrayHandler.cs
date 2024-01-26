@@ -53,6 +53,13 @@ namespace puzzle_3
             }
             return true;
         }
+
+
+        //static public bool IsNumberAdjacentUp(int i,int j, char[,] array ) //to uncomment and todo
+        //{
+
+        //    return false;
+        //}
         static public bool isSignAround(char[,] array2D,int i,int j,int numLength)
         {
             if(numLength < 1)
