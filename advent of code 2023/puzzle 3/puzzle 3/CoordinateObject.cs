@@ -16,5 +16,9 @@ namespace puzzle_3
             J = j;
             
         }
+        public CoordinateObject()
+        {
+            
+        }
     }
 }
