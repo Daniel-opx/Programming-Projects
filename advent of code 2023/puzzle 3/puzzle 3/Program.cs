@@ -71,7 +71,7 @@ namespace puzzle_3
             var ListOfIntForAggregate = new List<int>();
 
             var currentNumberList = new List<int>();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < numOfLines; i++)
             {
                 for (int j = 0; j < charMatrixLinq.GetLength(1); j++)
                 {

@@ -47,7 +47,7 @@ namespace puzzle_3
 
          static public bool IsCorrdinatesWithinBounds(int i,int j, char[,] array )
         {
-            if(j > array.GetLength(1) || i > array.GetLength(0) || i < 0 || j < 0)
+            if(j > array.GetLength(1)-1 || i > array.GetLength(0)-1 || i < 0 || j < 0)
             {
                 return false;
             }
