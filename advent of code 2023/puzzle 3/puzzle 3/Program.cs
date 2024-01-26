@@ -106,15 +106,15 @@ namespace puzzle_3
             Console.WriteLine($"the sum without the seed is : {sum}");
 
 
-            for (int i = 0; i < numOfLines; i++)
-            {
-                for (int j = 0; j < charMatrix.GetLength(1); j++)
-                {
-                    char currentChar = charMatrix[i, j];
-                    if (currentChar.Equals('*'))
-                    {
-                        //travel up and find number
-                        //if(isNumberAdjacentUp)
+            //for (int i = 0; i < numOfLines; i++)
+            //{
+            //    for (int j = 0; j < charMatrix.GetLength(1); j++)
+            //    {
+            //        char currentChar = charMatrix[i, j];
+            //        if (currentChar.Equals('*'))
+            //        {
+            //            //travel up and find number
+            //            //if(isNumberAdjacentUp)
 
 
 
@@ -123,10 +123,10 @@ namespace puzzle_3
 
 
 
-                        //travel down and find number
-                    }
-                }
-            }
+            //            //travel down and find number
+            //        }
+            //    }
+            //}
 
 
 
