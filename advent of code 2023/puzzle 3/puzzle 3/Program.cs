@@ -24,6 +24,7 @@ namespace puzzle_3
         static void Main(string[] args)
         {
             string path = "C:\\Programming Projects\\advent of code 2023\\puzzle 3\\puzzle 3\\input.txt";
+            string path2 = "C:\\Programming Projects\\advent of code 2023\\puzzle 3\\puzzle 3\\input2.txt";
 
             int numOfLines = File.ReadAllLines(path).Length; //number of strings in the input file
             int numOfCharsInLine = File.ReadAllLines(path)[0].Length; // number of chars in each line /string- 140 cahrs in each string in input
@@ -77,7 +78,7 @@ namespace puzzle_3
             }
             int sum = ListOfIntForSumAgrregate.Aggregate((acc, current) => acc + current);
            
-            Console.WriteLine($"the sum without the seed is : {sum}");
+            Console.WriteLine($"\nthe sum without the seed is : {sum}");
 
 
             var listOfGearRatio = new List<int>();
@@ -92,14 +93,16 @@ namespace puzzle_3
                        var listOfInts = charMatrixArrayHanlder.CalculateGearRatio(i, j);
                         if(listOfInts.Count == 2)
                         {
-                            listOfGearRatio.Add(listOfInts.Aggregate((acc, current) => acc * current));
+                            //listOfGearRatio.Add(listOfInts.Aggregate((acc, current) => acc * current));
+                            listOfGearRatio.Add(listOfInts[0] * listOfInts[1]);
                         }
 
                     }
                 }
             }
 
-            Console.WriteLine("");
+            Console.WriteLine($"the sum of all gear ratios is {listOfGearRatio.Aggregate((acc,curr)=>acc+curr)}");
+            
 
 
         }

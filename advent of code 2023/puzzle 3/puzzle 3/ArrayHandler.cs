@@ -155,8 +155,15 @@ namespace puzzle_3
                         if (array2D[iWithLengthOffset,jWithWidthOffset].isDigit())
                         {
                             int number = ParseNumberFromSeparateDigits(new Coordinate(iWithLengthOffset, jWithWidthOffset), new List<int>());
-                            intlist.OverWriteLastElementOfList(number);
-                            break;
+                            if(NonStaticIsCoordinateInRange(iWithLengthOffset,jWithWidthOffset-1))
+                            {
+                                if (!array2D[iWithLengthOffset,jWithWidthOffset-1].isDigit()) intlist.Add(number);
+                                else
+                                    intlist.OverWriteLastElementOfList(number);
+                                break;
+                            }
+                           
+                            
                         }
                     }
 
