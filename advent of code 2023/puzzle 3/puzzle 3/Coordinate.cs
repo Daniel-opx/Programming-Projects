@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace puzzle_3
 {
-    internal class CoordinateObject
+    internal class Coordinate
     {
         public int I { get; set; }
         public int J { get; set; }
-        public CoordinateObject(int i ,int j)
+        public Coordinate(int i ,int j)
         {
             I = i;
             J = j;
             
         }
-        public CoordinateObject()
+        public Coordinate()
         {
             
         }

@@ -92,17 +92,7 @@ namespace puzzle_3
                     char currentChar = charMatrix[i, j];
                     if (currentChar.Equals('*'))
                     {
-                        var UpDownIntList = charMatrixArrayHanlder.CalculateGearRatioUpDown(i, j);
-                        var RightLeftIntList = charMatrixArrayHanlder.CalculateGearRatioLeftRight(i, j);
-                        if(!UpDownIntList.Contains(null))
-                        {
-                            //listOfGearRatio.Add( UpDownIntList.Aggregate( (acc, current) => acc + current));
-                            listOfGearRatio.Add(UpDownIntList[0]+ UpDownIntList[1]);
-                        }
-                        else if(!RightLeftIntList.Contains(null))
-                            {
-                            listOfGearRatio.Add(RightLeftIntList.Aggregate((acc,curr)=>acc+curr));
-                        }
+                       
 
 
                     }
