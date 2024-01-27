@@ -37,10 +37,7 @@ namespace puzzle_3
             //iteration the aggregate use the array as the accumelator -the acc, and assign the current with the add function that i made
             File.ReadAllBytes(path).Aggregate(charMatrix, (acc, current) =>
             {
-                
                     charMatrixArrayHanlder.Add((char)current);
-                
-
                 return acc;
             });
 
@@ -83,7 +80,7 @@ namespace puzzle_3
             Console.WriteLine($"the sum without the seed is : {sum}");
 
 
-            var listOfGearRatio = new List<int?>();
+            var listOfGearRatio = new List<int>();
 
             for (int i = 0; i < numOfLines; i++)
             {
@@ -92,8 +89,11 @@ namespace puzzle_3
                     char currentChar = charMatrix[i, j];
                     if (currentChar.Equals('*'))
                     {
-                       
-
+                       var listOfInts = charMatrixArrayHanlder.CalculateGearRatio(i, j);
+                        if(listOfInts.Count == 2)
+                        {
+                            listOfGearRatio.Add(listOfInts.Aggregate((acc, current) => acc * current));
+                        }
 
                     }
                 }

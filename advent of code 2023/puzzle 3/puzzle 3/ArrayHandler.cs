@@ -85,153 +85,12 @@ namespace puzzle_3
             return Program.ListToInt(list);
 
         }
-
-
-        /*                                                                                 helper functions- travel in the giver direction and extract a number if possible
-         * ==============================================================================================================================================================================================================================
-         */
-
-        int? FindUpperNumber(int x, int y)
-        {
-            var ListForNum = new List<int>();
-            var FirstOccurrenceOfNum = new Coordinate(-1,-1);
-            if (!NonStaticIsCoordinateInRange(x-1,y))
-                {
-                Console.WriteLine("upper line is out of range");
-                
-                return null;
-
-            }
-            for(int upWidthOffset = -1; upWidthOffset <= 1 ; upWidthOffset++)
-            {
-                if(!NonStaticIsCoordinateInRange(x - 1, y+upWidthOffset))
-                {
-                    continue;
-                }
-                if (array2D[x + 1, y + upWidthOffset].isDigit())
-                {
-                    FirstOccurrenceOfNum.I = x - 1;
-                    FirstOccurrenceOfNum.J = y + upWidthOffset;
-                    break;
-                }
-            }
-            if(FirstOccurrenceOfNum.I != -1)
-            {
-                int upperNumber = ParseNumberFromSeparateDigits(FirstOccurrenceOfNum, ListForNum);
-                return upperNumber;
-            }
-           return null;
-
-
-        }
-
-        int? FindBottomNumber(int x, int y)
-        {
-            var ListForNum = new List<int>();
-            
-            var FirstOccurrenceOfNum = new Coordinate(-1,-1);
-            if (!NonStaticIsCoordinateInRange(x + 1, y))
-            {
-                Console.WriteLine("bottom line is out of range");
-
-                return null;
-            }
-            for (int upWidthOffset = -1; upWidthOffset <= 1; upWidthOffset++)
-            {
-                if (!NonStaticIsCoordinateInRange(x + 1, y + upWidthOffset))
-                {
-                    continue;
-                }
-                if (array2D[x + 1, y + upWidthOffset].isDigit())
-                {
-                    FirstOccurrenceOfNum.I = x + 1;
-                    FirstOccurrenceOfNum.J = y + upWidthOffset;
-                    break;
-                }
-            }
-
-            if(FirstOccurrenceOfNum.I != -1)
-            {
-                int bottomNumber = ParseNumberFromSeparateDigits(FirstOccurrenceOfNum, ListForNum);
-                return bottomNumber;
-            }
-            return null;
-
-
-        }
-
-
-      
-
-
-        int? FindLeftNumber(int x, int y)
-        {
-            var ListForNum = new List<int>();
-            if (!NonStaticIsCoordinateInRange(x, y - 1))
-                return null;
-
-            var locationOfNum = new Coordinate(-1,-1);
-
-            if (array2D[x,y-1].isDigit())
-            {
-                locationOfNum.I = x;
-                locationOfNum.J = y - 1;
-            }
-
-            if(locationOfNum.I != -1)
-            {
-                int leftNumber = ParseNumberFromSeparateDigits(locationOfNum, ListForNum);
-                return leftNumber;
-            }
-
-            return null;
-
-
-        }
-
-         int? FindRightNumber(int x, int y)
-        {
-            var ListForNum = new List<int>();
-            if (!NonStaticIsCoordinateInRange(x, y + 1))
-                return null;
-
-            var locationOfNum = new Coordinate(-1, -1);
-
-            if (array2D[x, y + 1].isDigit())
-            {
-                locationOfNum.I = x;
-                locationOfNum.J = y + 1;
-            }
-
-            if (locationOfNum.I != -1)
-            {
-               int rightNumber =ParseNumberFromSeparateDigits(locationOfNum,ListForNum);
-                return rightNumber;
-            }
-
-            return null;
-
-
-        }
-
-        public List<int?> CalculateGearRatioUpDown(int i ,int j)
-        {
-           var returnList = new List<int?>();
-            returnList.Add(FindBottomNumber(i, j));
-            returnList.Add(FindUpperNumber(i, j));
-            return returnList;
-        }
-        public List<int?> CalculateGearRatioLeftRight(int i, int j)
-        {
-            var returnList = new List<int?>();
-            returnList.Add(FindLeftNumber(i, j));
-            returnList.Add(FindRightNumber(i, j));
-            return returnList;
-        }
-
-
-
-
+        /// <summary>
+        /// checks if the coordinates is in the range of the matrix
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
         public bool NonStaticIsCoordinateInRange(int i, int j)
         {
             if (j > array2D.GetLength(1) - 1 || i > array2D.GetLength(0) - 1 || i < 0 || j < 0)
@@ -239,12 +98,20 @@ namespace puzzle_3
                 return false;
             }
             return true;
-            
+
         }
 
-         static public bool IsCorrdinatesWithinBounds(int i,int j, char[,] array )
+        /// <summary>
+        ///         checks if the coordinates is in the range of the matrix
+
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        static public bool IsCorrdinatesWithinBounds(int i, int j, char[,] array)
         {
-            if(j > array.GetLength(1)-1 || i > array.GetLength(0)-1 || i < 0 || j < 0)
+            if (j > array.GetLength(1) - 1 || i > array.GetLength(0) - 1 || i < 0 || j < 0)
             {
                 return false;
             }
@@ -252,7 +119,79 @@ namespace puzzle_3
         }
 
 
+
+        /*                                                                                 helper functions- travel in the giver direction and extract a number if possible
+         * ==============================================================================================================================================================================================================================
+         */
+
         
+
+        public List<int> CalculateGearRatio(int i , int j)
+        {
+            var intlist = new List<int>();
+            for (int lengthOfsset = -1; lengthOfsset <= 1; lengthOfsset++)
+            {
+                for (int widthOffset = -1; widthOffset <= 1; widthOffset++)
+                {
+                    int iWithLengthOffset = i + lengthOfsset;
+                    int jWithWidthOffset = j + widthOffset;
+
+                    if (!NonStaticIsCoordinateInRange(iWithLengthOffset, jWithWidthOffset))
+                        continue;
+                    if(lengthOfsset == -1 && widthOffset == 0)
+                    {
+                        if (array2D[iWithLengthOffset,jWithWidthOffset].isDigit())
+                        {
+                            //compute number
+                            int number = ParseNumberFromSeparateDigits(new Coordinate(iWithLengthOffset, jWithWidthOffset), new List<int>());
+                            intlist.OverWriteLastElementOfList(number);
+                            lengthOfsset = 0; widthOffset = -2;
+                            continue;
+                        }
+                    }
+
+                    if( lengthOfsset == 1 && widthOffset == 0)
+                    {
+                        if (array2D[iWithLengthOffset,jWithWidthOffset].isDigit())
+                        {
+                            int number = ParseNumberFromSeparateDigits(new Coordinate(iWithLengthOffset, jWithWidthOffset), new List<int>());
+                            intlist.OverWriteLastElementOfList(number);
+                            break;
+                        }
+                    }
+
+
+
+
+                    if (array2D[iWithLengthOffset,jWithWidthOffset].isDigit())
+                    {
+                        int number = ParseNumberFromSeparateDigits(new Coordinate(iWithLengthOffset, jWithWidthOffset), new List<int>());
+                        intlist.Add(number);
+                    }
+
+                }
+            }
+            return intlist;
+        }
+
+
+
+
+
+        
+
+
+
+
+        /// <summary>
+        /// part 1 solution- checks if there is a any sign around the coordinate - the char - in question
+        /// </summary>
+        /// <param name="array2D"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <param name="numLength"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         static public bool isSignAround(char[,] array2D,int i,int j,int numLength)
         {
             if(numLength < 1)

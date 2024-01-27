@@ -18,5 +18,14 @@ namespace puzzle_3
             if (ch >= zero && ch <= nine) return true;
             return false;
         }
+
+        static public void OverWriteLastElementOfList(this List<int> list,int num)
+        {
+            if
+                (list.Count == 0) list.Add(num);
+            else
+                list[list.Count - 1] = num;
+
+        }
     }
 }

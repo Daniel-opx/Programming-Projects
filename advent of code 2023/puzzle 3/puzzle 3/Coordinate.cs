@@ -10,7 +10,7 @@ namespace puzzle_3
     {
         public int I { get; set; }
         public int J { get; set; }
-        public Coordinate(int i ,int j)
+        public Coordinate(int i ,int j) 
         {
             I = i;
             J = j;
