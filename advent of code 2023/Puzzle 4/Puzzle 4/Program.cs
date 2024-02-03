@@ -20,26 +20,36 @@ namespace Puzzle_4
             }).ToDictionary(a => a.cardNum, a => new List<List<int>>() { a.winningNumbers, a.myNums });
 
             int sumOfAllPoints = 0; //part 1 variable solution
-
-            int totalNumOfScratchCards = ParsedInput.Count; //initial the variable with the original count of cards 
-            
-            foreach (var value in ParsedInput.Values)
+            var cardsList = new List<Card>();
+            foreach (var value in ParsedInput)
             {
                 var pointerCounter = new PointerCounter();
-                
-                foreach (var item in value[1])
+                cardsList.Add(new Card(value.Key));
+                foreach (var item in value.Value[1])
                 {
-                    if (value[0].Contains(item))
+
+                    if (value.Value[0].Contains(item))
                     {
                         pointerCounter.AddPoint();
+                        cardsList[value.Key-1].Matches++;
                         
                     }
                 }
                 sumOfAllPoints += pointerCounter.points;
-
-
             }
             Console.WriteLine("the sum is "+ sumOfAllPoints );
+
+            foreach (var card in cardsList)
+            {
+               int position = card.Id ;
+               for(int i = 0;i < card.Matches;i++)
+               {
+                    if(position < cardsList.Count)
+                    cardsList[position++].AddCopies(card.Copies);
+               }
+            }
+           var sum= cardsList.Aggregate(0, (acc, curr) => acc + curr.Copies);
+            Console.WriteLine("the sum of all copies is "+ sum);
 
 
 
