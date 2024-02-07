@@ -1,6 +1,7 @@
 ﻿using static Puzzle_5.RegexPatterns;
 using static Puzzle_5.FileReadMethods;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 namespace Puzzle_5
 {
     internal class Program
@@ -17,7 +18,7 @@ namespace Puzzle_5
             temperature,
             humidity,
             location
-        }
+        };
         static void Main(string[] args)
         {
             string inputPath = "C:\\Programming Projects\\advent of code 2023\\Puzzle 5\\Puzzle 5\\input.txt";
@@ -26,37 +27,43 @@ namespace Puzzle_5
                 .Select(match=>long.Parse(match.Value))
                 .ToList();
 
-            List<(long? seed, long? soil, long? fertilizer, long? water, long? light, long? temperature, long? humidity, long? location)> seedToLoactionMapList =
-                                new List<(long? seed, long? soil, long? fertilizer, long? water, long? light, long? temperature, long? humidity, long? location)>();
-            seedToLoactionMapList.Add((5,null,null,null,null,null,null,null));
-            Console.WriteLine(seedToLoactionMapList[0].seed);
+            
 
+            // Create a dictionary to map enum values to HashSet<long>
+            Dictionary<maps, HashSet<long>> hashSets = new Dictionary<maps, HashSet<long>>();
 
-            var  seed = new HashSet<long>();
-            var soil = new HashSet<long>(); 
-            var fertilizer = new HashSet<long>(); 
-            var water = new HashSet<long>();
-            var light = new HashSet<long>();
-            var temperature = new HashSet<long>(); 
-            var humidity = new HashSet<long>();
-            var location = new HashSet<long>();
+            // Initialize hash sets
+            foreach (maps map in Enum.GetValues(typeof(maps)))
+            {
+                hashSets[map] = new HashSet<long>();
+            }
+            var mapsArr = Enum.GetValues(typeof(maps));
 
+            var seedToLoactionMapList = new List<SeedToLoactionMap>();
+            
+
+            
             var matchCollection = ExtractBlock.Matches(File.ReadAllText(inputPath));
 
-            for(int i = 0; i < matchCollection.Count; i++)
+            for(int i = 0; i < matchCollection.Count; i++) //matchCollection.count is 7, there is 7 blocks of numbers map
             {
                 var textBlock = matchCollection[i].Value; //make a variable for the text block
-                var lines = textBlock.Split("\r\n").Where(str => !str.Equals("") && !str.EndsWith(":")).ToList(); //converts the text into list of lines, each line contains (int destanation,int source,int skips)
+                var lines = textBlock.Split("\r\n").Where(str => !str.Equals("") && !str.EndsWith(":")).ToList(); //converts the text into list of lines, each line contains (int destanation,int src,int skips)
                 long[]? numbers;
+                var sourceHashSet = hashSets[(maps)i];
+                var dstHashSet = hashSets[(maps)i+1];
+                
+               
                 foreach(var line in lines)
                 {
 
                      numbers = extractNumbers.Matches(line).Select(match => long.Parse(match.Value)).ToArray();
-                    long? dst = numbers[0]; long? source = numbers[1]; long? skips = numbers[2];
-
+                    long dst = numbers[0]; long src = numbers[1]; long skips = numbers[2];
+                    if(!sourceHashSet.Contains(src)) sourceHashSet.Add(src);
+                    
 
                     
-                    
+
 
                 }
 
