@@ -2,13 +2,16 @@
 using static Puzzle_5.FileReadMethods;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Net;
+
 namespace Puzzle_5
 {
     internal class Program
     {
+       
         
-        
-        enum maps
+       public enum maps
         {
             seed = 0,
             soil,
@@ -39,13 +42,13 @@ namespace Puzzle_5
             }
             var mapsArr = Enum.GetValues(typeof(maps));
 
+
             var seedToLoactionMapList = new List<SeedToLoactionMap>();
-            
-
-            
             var matchCollection = ExtractBlock.Matches(File.ReadAllText(inputPath));
+            long seedToLoactionMapListIndex = 0;
+          
 
-            for(int i = 0; i < matchCollection.Count; i++) //matchCollection.count is 7, there is 7 blocks of numbers map
+            for (int i = 0; i < matchCollection.Count; i++) //matchCollection.count is 7, there is 7 blocks of numbers map
             {
                 var textBlock = matchCollection[i].Value; //make a variable for the text block
                 var lines = textBlock.Split("\r\n").Where(str => !str.Equals("") && !str.EndsWith(":")).ToList(); //converts the text into list of lines, each line contains (int destanation,int src,int skips)
@@ -54,28 +57,42 @@ namespace Puzzle_5
                 var dstHashSet = hashSets[(maps)i+1];
                 
                
-                foreach(var line in lines)
+                for(int j = 0; j < lines.Count;j++)
                 {
-
-                     numbers = extractNumbers.Matches(line).Select(match => long.Parse(match.Value)).ToArray();
+                     numbers = extractNumbers.Matches(lines[j]).Select(match => long.Parse(match.Value)).ToArray();
                     long dst = numbers[0]; long src = numbers[1]; long skips = numbers[2];
-                    if(!sourceHashSet.Contains(src)) sourceHashSet.Add(src);
                     
+                    if (i == 0)
+                    {
+                        var increment = 0;
+                        for (int k = 0; k < skips; k+=(int)skips-1)
+                        {
 
-                    
+                            var currIndex = (int)seedToLoactionMapListIndex + increment;
+                            
+                            seedToLoactionMapList.Add(new SeedToLoactionMap());
+                            var srcIncrement = increment == 0? src : src+skips-1 ;
+                            var dstIncrement = increment == 0? dst : dst+skips-1 ;
+                            seedToLoactionMapList[currIndex].SetValue((maps)i, srcIncrement);
+                            seedToLoactionMapList[currIndex].SetValue((maps)i + 1, dstIncrement);
+                            increment++;
+
+                            sourceHashSet.Add(srcIncrement);
+                            dstHashSet.Add(dstIncrement);
+                        }
+
+                        seedToLoactionMapListIndex = seedToLoactionMapListIndex + 2;
+                    }
+
+
 
 
                 }
-
-
-
+               
             }
+            
+                
 
-            //foreach (Match match in matchCollection)
-            //{
-            //    Console.WriteLine(match.Value+ "\n" +"====================================================");
-                 
-            //}
 
 
             Console.WriteLine();
