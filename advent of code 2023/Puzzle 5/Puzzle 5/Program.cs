@@ -25,9 +25,10 @@ namespace Puzzle_5
         static void Main(string[] args)
         {
             string inputPath = "C:\\Programming Projects\\advent of code 2023\\Puzzle 5\\Puzzle 5\\input.txt";
+            string smallInput = "C:\\Programming Projects\\advent of code 2023\\Puzzle 5\\Puzzle 5\\TextFile1.txt";
 
-            var seedList = extractNumbers.Matches(ReadFirstLine(inputPath)) //parsing of the seeds to list of seeds , each seed represented by a number
-                .Select(match => long.Parse(match.Value))
+            var seedList = extractNumbers.Matches(ReadFirstLine(smallInput)) //parsing of the seeds to list of seeds , each seed represented by a number
+                .Select(match => long.Parse(match.Value)).OrderBy(num => num)
                 .ToList();
 
 
@@ -44,7 +45,7 @@ namespace Puzzle_5
 
 
             var seedToLoactionMapList = new List<SeedToLoactionMap>();
-            var matchCollection = ExtractBlock.Matches(File.ReadAllText(inputPath));
+            var matchCollection = ExtractBlock.Matches(File.ReadAllText(smallInput));
             int seedToLoactionMapListIndex = 0;
 
 
@@ -81,22 +82,38 @@ namespace Puzzle_5
                     }
 
                     seedToLoactionMapListIndex = seedToLoactionMapListIndex + 2;
-                    if(j > 0 && j % 2 != 0)
+
+
+
+                    bool isRangeContainsSeed = false;
+                    foreach (var item in seedList)
                     {
-                        foreach(var item in seedList)
+                        if ((item >= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed && item <= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed))
                         {
-                            if(!(item >= (long)seedToLoactionMapList[seedToLoactionMapListIndex-2].Seed && item < (long)seedToLoactionMapList[seedToLoactionMapListIndex-1].Seed))
-                            {
-                                seedToLoactionMapList.RemoveRange(seedToLoactionMapListIndex - 2, 2);
-                                seedToLoactionMapListIndex -= 2;
-                                break;
-                            }
+                            isRangeContainsSeed = true;
+                            break;
                         }
+                        isRangeContainsSeed = false;
+
+
                     }
+                    if (isRangeContainsSeed == false)
+                    {
+                        hashSets[maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed);
+                        hashSets[maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Soil);
+                        hashSets[maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed);
+                        hashSets[maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Soil);
+                        seedToLoactionMapList.RemoveRange(seedToLoactionMapListIndex - 2, 2);
+                        seedToLoactionMapListIndex -= 2;
+
+
+                    }
+
                 }
 
             }
-
+            var seedMin = seedToLoactionMapList.Select(s => s.Seed).Min();
+            var seedMax = seedToLoactionMapList.Select(s => s.Seed).Max();
 
 
 
@@ -104,5 +121,6 @@ namespace Puzzle_5
             Console.WriteLine();
 
         }
+        static bool isRangeContainsSeed() { return true; }
     }
 }
