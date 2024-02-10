@@ -13,6 +13,9 @@ namespace Puzzle_5
             public long Value { get; set; } // Remove ? for non-nullable
             public MapNode Next { get; set; }
         }
+       
+
+
 
         // Define the first node of the linked list
         private MapNode seedNode = new MapNode();
@@ -28,6 +31,8 @@ namespace Puzzle_5
             seedNode.Next.Next.Next.Next.Next = new MapNode(); // Light -> Temperature
             seedNode.Next.Next.Next.Next.Next.Next = new MapNode(); // Temperature -> Humidity
             seedNode.Next.Next.Next.Next.Next.Next.Next = new MapNode(); // Humidity -> Location
+            
+
         }
 
         // Properties to access the linked list nodes
@@ -79,57 +84,57 @@ namespace Puzzle_5
             set => seedNode.Next.Next.Next.Next.Next.Next.Next.Value = value;
         }
         // Get and set values by enum name
-        public long GetValue(maps map)
+        public long GetValue(Maps map)
         {
             switch (map)
             {
-                case maps.seed:
+                case Maps.seed:
                     return seedNode.Value;
-                case maps.soil:
+                case Maps.soil:
                     return seedNode.Next.Value;
-                case maps.fertilizer:
+                case Maps.fertilizer:
                     return seedNode.Next.Next.Value;
-                case maps.water:
+                case Maps.water:
                     return seedNode.Next.Next.Next.Value;
-                case maps.light:
+                case Maps.light:
                     return seedNode.Next.Next.Next.Next.Value;
-                case maps.temperature:
+                case Maps.temperature:
                     return seedNode.Next.Next.Next.Next.Next.Value;
-                case maps.humidity:
+                case Maps.humidity:
                     return seedNode.Next.Next.Next.Next.Next.Next.Value;
-                case maps.location:
+                case Maps.location:
                     return seedNode.Next.Next.Next.Next.Next.Next.Next.Value;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(map), map, null);
             }
         }
 
-        public void SetValue(maps map, long value)
+        public void SetValue(Maps map, long value)
         {
             switch (map)
             {
-                case maps.seed:
+                case Maps.seed:
                     seedNode.Value = value;
                     break;
-                case maps.soil:
+                case Maps.soil:
                     seedNode.Next.Value = value;
                     break;
-                case maps.fertilizer:
+                case Maps.fertilizer:
                     seedNode.Next.Next.Value = value;
                     break;
-                case maps.water:
+                case Maps.water:
                     seedNode.Next.Next.Next.Value = value;
                     break;
-                case maps.light:
+                case Maps.light:
                     seedNode.Next.Next.Next.Next.Value = value;
                     break;
-                case maps.temperature:
+                case Maps.temperature:
                     seedNode.Next.Next.Next.Next.Next.Value = value;
                     break;
-                case maps.humidity:
+                case Maps.humidity:
                     seedNode.Next.Next.Next.Next.Next.Next.Value = value;
                     break;
-                case maps.location:
+                case Maps.location:
                     seedNode.Next.Next.Next.Next.Next.Next.Next.Value = value;
                     break;
                 default:

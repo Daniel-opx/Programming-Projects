@@ -11,7 +11,7 @@ namespace Puzzle_5
     {
 
 
-        public enum maps
+        public enum Maps
         {
             seed = 0,
             soil,
@@ -22,105 +22,414 @@ namespace Puzzle_5
             humidity,
             location
         };
+
         static void Main(string[] args)
         {
             string inputPath = "C:\\Programming Projects\\advent of code 2023\\Puzzle 5\\Puzzle 5\\input.txt";
             string smallInput = "C:\\Programming Projects\\advent of code 2023\\Puzzle 5\\Puzzle 5\\TextFile1.txt";
 
-            var seedList = extractNumbers.Matches(ReadFirstLine(smallInput)) //parsing of the seeds to list of seeds , each seed represented by a number
+            var seedList = extractNumbers.Matches(ReadFirstLine(inputPath)) //parsing of the seeds to list of seeds , each seed represented by a number
                 .Select(match => long.Parse(match.Value)).OrderBy(num => num)
                 .ToList();
 
 
 
             // Create a dictionary to map enum values to HashSet<long>
-            Dictionary<maps, HashSet<long>> hashSets = new Dictionary<maps, HashSet<long>>();
+            Dictionary<Maps, HashSet<long>> hashSets = new Dictionary<Maps, HashSet<long>>();
 
             // Initialize hash sets
-            foreach (maps map in Enum.GetValues(typeof(maps)))
+            foreach (Maps map in Enum.GetValues(typeof(Maps)))
             {
                 hashSets[map] = new HashSet<long>();
+
             }
-            var mapsArr = Enum.GetValues(typeof(maps));
+
 
 
             var seedToLoactionMapList = new List<SeedToLoactionMap>();
-            var matchCollection = ExtractBlock.Matches(File.ReadAllText(smallInput));
+
+
+            var textBlocks = ExtractBlock.Matches(File.ReadAllText(inputPath));
+
+            var seedToSoilTExtBlock = textBlocks[0].Value; //make a variable for the text block
+
+            var seedLines = seedToSoilTExtBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).
+                ToList(); //converts the text into list of seedLines, each line contains (int destanation,int src,int skips)
+            long[]? numbers;
+
+
             int seedToLoactionMapListIndex = 0;
 
-
-            for (int i = 0; i < 1; i++) //matchCollection.count is 7, there is 7 blocks of numbers map
+            for (int j = 0; j < seedLines.Count; j++)
             {
-                var textBlock = matchCollection[i].Value; //make a variable for the text block
-                var lines = textBlock.Split("\r\n").Where(str => !str.Equals("") && !str.EndsWith(":")).ToList(); //converts the text into list of lines, each line contains (int destanation,int src,int skips)
-                long[]? numbers;
-                var sourceHashSet = hashSets[(maps)i];
-                var dstHashSet = hashSets[(maps)i + 1];
+                var sourceHashSet = hashSets[(Maps)0];
+                var dstHashSet = hashSets[(Maps)1];
+                numbers = extractNumbers.Matches(seedLines[j]).Select(match => long.Parse(match.Value)).ToArray();
+                long dst = numbers[0]; long src = numbers[1]; long skips = numbers[2];
 
 
-                for (int j = 0; j < lines.Count; j++)
+                var increment = 0;
+                for (int k = 0; k < skips; k += (int)skips - 1)
                 {
-                    numbers = extractNumbers.Matches(lines[j]).Select(match => long.Parse(match.Value)).ToArray();
-                    long dst = numbers[0]; long src = numbers[1]; long skips = numbers[2];
+
+                    var currIndex = (int)seedToLoactionMapListIndex + increment;
+
+                    seedToLoactionMapList.Add(new SeedToLoactionMap());
+                    var srcIncrement = increment == 0 ? src : src + skips - 1;
+                    var dstIncrement = increment == 0 ? dst : dst + skips - 1;
+                    seedToLoactionMapList[currIndex].SetValue((Maps)0, srcIncrement);
+                    seedToLoactionMapList[currIndex].SetValue((Maps)1, dstIncrement);
+                    increment++;
+
+                    sourceHashSet.Add(srcIncrement);
+                    dstHashSet.Add(dstIncrement);
+                }
+
+                seedToLoactionMapListIndex = seedToLoactionMapListIndex + 2;
+
+                if (!isRangeContainSeed(seedList, seedToLoactionMapList, seedToLoactionMapListIndex)) // delete the range of the last 2 element, they are not relevent to the seed list
+                {
+                    hashSets[Maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed);
+                    hashSets[Maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Soil);
+                    hashSets[Maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed);
+                    hashSets[Maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Soil);
+                    seedToLoactionMapList.RemoveRange(seedToLoactionMapListIndex - 2, 2);
+                    seedToLoactionMapListIndex -= 2;
 
 
-                    var increment = 0;
-                    for (int k = 0; k < skips; k += (int)skips - 1)
+                }
+
+
+            }
+            var indexOfFirstRealMap = seedToLoactionMapList.Count;
+            //=================================================soil process==============================================================//
+            foreach (var seed in seedList)
+            {
+                var boolIndexTuple = isSeedInRangeOfSeedToLoactionMapList(seedToLoactionMapList, seed, indexOfFirstRealMap); // return (index,bool isinrange) of the current seed
+                if (boolIndexTuple.isInRage)
+                {
+                    if (!hashSets[Maps.seed].Contains(seed))
                     {
-
-                        var currIndex = (int)seedToLoactionMapListIndex + increment;
-
                         seedToLoactionMapList.Add(new SeedToLoactionMap());
-                        var srcIncrement = increment == 0 ? src : src + skips - 1;
-                        var dstIncrement = increment == 0 ? dst : dst + skips - 1;
-                        seedToLoactionMapList[currIndex].SetValue((maps)i, srcIncrement);
-                        seedToLoactionMapList[currIndex].SetValue((maps)i + 1, dstIncrement);
-                        increment++;
+                        seedToLoactionMapList.Last().Seed = seed; //set the seed property of the seedToLoactionMapList object to the seed that is currently being iterated on  
 
-                        sourceHashSet.Add(srcIncrement);
-                        dstHashSet.Add(dstIncrement);
+                        var indexOfReleventSeedObject = (int)boolIndexTuple.index;
+                        seedToLoactionMapList.Last().Soil = (seedToLoactionMapList[indexOfReleventSeedObject].Soil - seedToLoactionMapList[indexOfReleventSeedObject].Seed) //the diffrence between destanation and the source
+                            + seedToLoactionMapList.Last().Seed; //the seed property of the seedToLoactionMapList object that being set
+                        hashSets[Maps.seed].Add(seed); hashSets[Maps.soil].Add(seedToLoactionMapList.Last().Soil);
                     }
-
-                    seedToLoactionMapListIndex = seedToLoactionMapListIndex + 2;
-
-
-
-                    bool isRangeContainsSeed = false;
-                    foreach (var item in seedList)
+                    else
                     {
-                        if ((item >= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed && item <= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed))
-                        {
-                            isRangeContainsSeed = true;
-                            break;
-                        }
-                        isRangeContainsSeed = false;
+                        var tuple = FindReleventMapIndexInList(seedToLoactionMapList, seed);
+                        var index = (int)tuple.index;
 
-
+                        seedToLoactionMapList.Add(seedToLoactionMapList[index]);
                     }
-                    if (isRangeContainsSeed == false)
-                    {
-                        hashSets[maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed);
-                        hashSets[maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 2].Soil);
-                        hashSets[maps.seed].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed);
-                        hashSets[maps.soil].Remove(seedToLoactionMapList[seedToLoactionMapListIndex - 1].Soil);
-                        seedToLoactionMapList.RemoveRange(seedToLoactionMapListIndex - 2, 2);
-                        seedToLoactionMapListIndex -= 2;
+                }
+                else
+                {
+                    seedToLoactionMapList.Add(new SeedToLoactionMap());
+                    seedToLoactionMapList.Last().Seed = seedToLoactionMapList.Last().Soil = seed;
+                    hashSets[Maps.soil].Add(seedToLoactionMapList.Last().Soil); hashSets[Maps.seed].Add(seedToLoactionMapList.Last().Seed);
+                }
+            }
+            //====================================================================fertilizer process========================================================//
+
+            var soilToFertilizerTextBlock = textBlocks[(int)Maps.soil].Value;
+
+            var soilToFertilizerTuppleArr = soilToFertilizerTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long soil, long fertilizer, long skips) currentTuple;
+                    currentTuple.soil = long.Parse(nums[1].Value); currentTuple.fertilizer = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
 
 
-                    }
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var soilBollIndexTuple = isSoilInRange(soilToFertilizerTuppleArr, currentMap.Soil);
+                if (soilBollIndexTuple.isInRange)
+                {
+
+                    currentMap.Fertilizer = soilToFertilizerTuppleArr[(int)soilBollIndexTuple.index].fertilizer +
+                   (currentMap.Soil - soilToFertilizerTuppleArr[(int)soilBollIndexTuple.index].soil);
+
+                }
+                else
+                {
+                    currentMap.Fertilizer = currentMap.Soil;
+                }
+            }
+            //=====================================================water process==============================================================///
+
+            var fertilizerToWaterTextBlock = textBlocks[(int)Maps.fertilizer].Value;
+            var fertilizerToWaterTuppleArr = fertilizerToWaterTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long fertilizer, long water, long skips) currentTuple;
+                    currentTuple.fertilizer = long.Parse(nums[1].Value); currentTuple.water = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
+
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var fertilizerToWaterBoolIndexTuple = isFertilizerInRange(fertilizerToWaterTuppleArr, currentMap.Fertilizer);
+                if (fertilizerToWaterBoolIndexTuple.isInRange)
+                {
+
+                    currentMap.Water = fertilizerToWaterTuppleArr[(int)fertilizerToWaterBoolIndexTuple.index].water +
+                   (currentMap.Fertilizer - fertilizerToWaterTuppleArr[(int)fertilizerToWaterBoolIndexTuple.index].fertilizer);
+
+                }
+                else
+                {
+                    currentMap.Water = currentMap.Fertilizer;
+                }
+            }
+            //====================================================Water proccess===============================================================//
+
+            var WaterToLightTextBlock = textBlocks[(int)Maps.water].Value;
+            Console.WriteLine(WaterToLightTextBlock);
+            var WaterToLightTuppleArr = WaterToLightTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long water, long light, long skips) currentTuple;
+                    currentTuple.water = long.Parse(nums[1].Value); currentTuple.light = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
+
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var WaterToLightBoolIndexTuple = isWaterInRange(WaterToLightTuppleArr, currentMap.Water);
+                if (WaterToLightBoolIndexTuple.isInRange)
+                {
+
+                    currentMap.Light = WaterToLightTuppleArr[(int)WaterToLightBoolIndexTuple.index].light +
+                   (currentMap.Water - WaterToLightTuppleArr[(int)WaterToLightBoolIndexTuple.index].water);
+
+                }
+                else
+                {
+                    currentMap.Light = currentMap.Water;
+                }
+            }
+            //====================================================light proccess===============================================================//
+            var lightToTemperatureTextBlock = textBlocks[(int)Maps.light].Value;
+            Console.WriteLine(lightToTemperatureTextBlock);
+
+
+            var lightToTemperatureTuppleArr = lightToTemperatureTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long light, long temperature, long skips) currentTuple;
+                    currentTuple.light = long.Parse(nums[1].Value); currentTuple.temperature = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
+
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var lightTotemperatureBoolIndexTuple = isLightInRange(lightToTemperatureTuppleArr, currentMap.Light);
+                if (lightTotemperatureBoolIndexTuple.isInRange)
+                {
+
+                    currentMap.Temperature = lightToTemperatureTuppleArr[(int)lightTotemperatureBoolIndexTuple.index].temperature +
+                   (currentMap.Light - lightToTemperatureTuppleArr[(int)lightTotemperatureBoolIndexTuple.index].light);
+
+                }
+                else
+                {
+                    currentMap.Temperature = currentMap.Light;
+                }
+            }
+            //=========================================================Humidity Process====================================================//
+            var TemperatureToHumidityTextBlock = textBlocks[(int)Maps.temperature].Value;
+            Console.WriteLine(TemperatureToHumidityTextBlock);
+
+
+            var TemperatureToHumidityTuppleArr = TemperatureToHumidityTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long temperature, long humidity, long skips) currentTuple;
+                    currentTuple.temperature = long.Parse(nums[1].Value); currentTuple.humidity = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
+
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var temperatureToHumidityBoolIndexTuple = isTemperatureInRange(TemperatureToHumidityTuppleArr, currentMap.Temperature);
+                if (temperatureToHumidityBoolIndexTuple.isInRange)
+                {
+
+                    currentMap.Humidity = TemperatureToHumidityTuppleArr[(int)temperatureToHumidityBoolIndexTuple.index].humidity +
+                   (currentMap.Temperature - TemperatureToHumidityTuppleArr[(int)temperatureToHumidityBoolIndexTuple.index].temperature);
+
+                }
+                else
+                {
+                    currentMap.Humidity = currentMap.Temperature;
+                }
+            }
+            //========================================location process===============================///
+
+            var humidityToLocationTextBlock = textBlocks[(int)Maps.humidity].Value;
+            Console.WriteLine(humidityToLocationTextBlock);
+
+
+            var humidityToLocationTuppleArr = humidityToLocationTextBlock.Split("\r\n").
+                Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
+                {
+                    var nums = extractNumbers.Matches(str);
+                    (long humidity, long location, long skips) currentTuple;
+                    currentTuple.humidity = long.Parse(nums[1].Value); currentTuple.location = long.Parse(nums[0].Value); currentTuple.skips = long.Parse(nums[2].Value);
+                    return currentTuple;
+                }).ToArray();
+
+            for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
+            {
+                var currentMap = seedToLoactionMapList[i];
+                var humidityToLocationBoolIndexTuple = isHumidityInRange(humidityToLocationTuppleArr, currentMap.Temperature);
+
+                if (humidityToLocationBoolIndexTuple.isInRange)
+                {
+
+                    currentMap.Location = humidityToLocationTuppleArr[(int)humidityToLocationBoolIndexTuple.index].location +
+                   (currentMap.Humidity - humidityToLocationTuppleArr[(int)humidityToLocationBoolIndexTuple.index].humidity);
+
+                }
+                else
+                {
+                    currentMap.Location = currentMap.Humidity;
+                }
+            }
+            foreach (var map in seedToLoactionMapList)
+            {
+                Console.WriteLine("=============================================================\n\n\n");
+                Console.WriteLine($"seed:{map.Seed}=>soil:{map.Soil}=>fertilizer:{map.Fertilizer}=>water:{map.Water}=>light:{map.Light}=>temp:{map.Temperature}=>humidity:{map.Humidity}=>location:{map.Location}");
+            }
+            seedToLoactionMapList.RemoveRange(0, indexOfFirstRealMap);
+           
+            var minimumLOcationMap = seedToLoactionMapList.OrderBy(map => map.Location).First();
+            Console.WriteLine($"the map whith the min location starts with seed:{minimumLOcationMap.Seed} and its location is {minimumLOcationMap.Location}");
+            Console.WriteLine(seedToLoactionMapList.Select(map=>map.Location).Min());
+            Console.WriteLine();
+
+        }
+
+
+
+
+
+
+        static (long? index, bool isInRage) isSeedInRangeOfSeedToLoactionMapList(List<SeedToLoactionMap> seedToLoactionMapList, long currentSeed, int indexOfFirstRealMap)
+        {
+            for (int i = 0; i < indexOfFirstRealMap; i += 2)
+            {
+                if (currentSeed >= seedToLoactionMapList[i].Seed && currentSeed <= seedToLoactionMapList[i + 1].Seed)
+                {
+                    return (i, true);
+                }
+
+            }
+            return (null, false);
+        }
+        static (long? index, bool isInRage) FindReleventMapIndexInList(List<SeedToLoactionMap> seedToLoactionMapList, long currentSeed)
+        {
+            for (int i = 0; i < seedToLoactionMapList.Count; i += 2)
+            {
+                if (currentSeed >= seedToLoactionMapList[i].Seed && currentSeed <= seedToLoactionMapList[i + 1].Seed)
+                {
+                    return (i, true);
+                }
+
+            }
+            return (null, false);
+        }
+        static bool isRangeContainSeed(List<long> seedList, List<SeedToLoactionMap>? seedToLoactionMapList, int seedToLoactionMapListIndex)
+        {
+            foreach (var item in seedList)
+            {
+                if ((item >= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 2].Seed && item <= (long)seedToLoactionMapList[seedToLoactionMapListIndex - 1].Seed))
+                {
+                    return true;
 
                 }
 
             }
-            var seedMin = seedToLoactionMapList.Select(s => s.Seed).Min();
-            var seedMax = seedToLoactionMapList.Select(s => s.Seed).Max();
-
-
-
-
-            Console.WriteLine();
-
+            return false;
         }
-        static bool isRangeContainsSeed() { return true; }
+        static (long? index, bool isInRange) isSoilInRange((long soil, long fertilizer, long skips)[] tupleArr, long currentSoil)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentSoil >= currTuple.soil && currentSoil <= (currTuple.soil + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
+        static (long? index, bool isInRange) isFertilizerInRange((long fertilizer, long water, long skips)[] tupleArr, long currentFertilizer)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentFertilizer >= currTuple.fertilizer && currentFertilizer <= (currTuple.fertilizer + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
+        static (long? index, bool isInRange) isWaterInRange((long water, long light, long skips)[] tupleArr, long currentWater)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentWater >= currTuple.water && currentWater <= (currTuple.water + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
+
+        static (long? index, bool isInRange) isLightInRange((long light, long temperature, long skips)[] tupleArr, long currentLight)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentLight >= currTuple.light && currentLight <= (currTuple.light + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
+
+        static (long? index, bool isInRange) isTemperatureInRange((long temperature, long humidity, long skips)[] tupleArr, long currentTemperature)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentTemperature >= currTuple.temperature && currentTemperature <= (currTuple.temperature + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
+        static (long? index, bool isInRange) isHumidityInRange((long humidity, long location, long skips)[] tupleArr, long currentHumidity)
+        {
+            for (int i = 0; i < tupleArr.Length; i++)
+            {
+                var currTuple = tupleArr[i];
+
+                if (currentHumidity >= currTuple.humidity && currentHumidity <= (currTuple.humidity + currTuple.skips - 1)) return (i, true);
+            }
+            return (null, false);
+        }
     }
 }
