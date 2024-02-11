@@ -32,6 +32,7 @@ namespace Puzzle_5
                 .Select(match => long.Parse(match.Value)).OrderBy(num => num)
                 .ToList();
 
+            delegate (long? index, bool isInRange) isSoilInRange((long soil, long fertilizer, long skips)[] tupleArr, long currentSoil);
 
 
             // Create a dictionary to map enum values to HashSet<long>
