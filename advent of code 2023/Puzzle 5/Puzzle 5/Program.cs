@@ -151,12 +151,14 @@ namespace Puzzle_5
             for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
             {
                 var currentMap = seedToLoactionMapList[i];
+
                 var soilBollIndexTuple = isSoilInRange(soilToFertilizerTuppleArr, currentMap.Soil);
                 if (soilBollIndexTuple.isInRange)
                 {
+                    var indexOfReleventTuple = (int)soilBollIndexTuple.index;
 
-                    currentMap.Fertilizer = soilToFertilizerTuppleArr[(int)soilBollIndexTuple.index].fertilizer +
-                   (currentMap.Soil - soilToFertilizerTuppleArr[(int)soilBollIndexTuple.index].soil);
+                    currentMap.Fertilizer = soilToFertilizerTuppleArr[indexOfReleventTuple].fertilizer +
+                   (currentMap.Soil - soilToFertilizerTuppleArr[indexOfReleventTuple].soil);
 
                 }
                 else
@@ -179,12 +181,14 @@ namespace Puzzle_5
             for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
             {
                 var currentMap = seedToLoactionMapList[i];
+
                 var fertilizerToWaterBoolIndexTuple = isFertilizerInRange(fertilizerToWaterTuppleArr, currentMap.Fertilizer);
                 if (fertilizerToWaterBoolIndexTuple.isInRange)
                 {
+                    var indexOfReleventTuple = (int)fertilizerToWaterBoolIndexTuple.index;
 
-                    currentMap.Water = fertilizerToWaterTuppleArr[(int)fertilizerToWaterBoolIndexTuple.index].water +
-                   (currentMap.Fertilizer - fertilizerToWaterTuppleArr[(int)fertilizerToWaterBoolIndexTuple.index].fertilizer);
+                    currentMap.Water = fertilizerToWaterTuppleArr[indexOfReleventTuple].water +
+                   (currentMap.Fertilizer - fertilizerToWaterTuppleArr[indexOfReleventTuple].fertilizer);
 
                 }
                 else
@@ -192,10 +196,10 @@ namespace Puzzle_5
                     currentMap.Water = currentMap.Fertilizer;
                 }
             }
-            //====================================================Water proccess===============================================================//
+            //====================================================light proccess===============================================================//
 
             var WaterToLightTextBlock = textBlocks[(int)Maps.water].Value;
-            Console.WriteLine(WaterToLightTextBlock);
+            //Console.WriteLine(WaterToLightTextBlock);
             var WaterToLightTuppleArr = WaterToLightTextBlock.Split("\r\n").
                 Where(str => !str.Equals("") && !str.EndsWith(":")).Select(str =>
                 {
@@ -208,12 +212,14 @@ namespace Puzzle_5
             for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
             {
                 var currentMap = seedToLoactionMapList[i];
+
                 var WaterToLightBoolIndexTuple = isWaterInRange(WaterToLightTuppleArr, currentMap.Water);
                 if (WaterToLightBoolIndexTuple.isInRange)
                 {
+                    var indexOfRelevantMap = (int)WaterToLightBoolIndexTuple.index;
 
-                    currentMap.Light = WaterToLightTuppleArr[(int)WaterToLightBoolIndexTuple.index].light +
-                   (currentMap.Water - WaterToLightTuppleArr[(int)WaterToLightBoolIndexTuple.index].water);
+                    currentMap.Light = WaterToLightTuppleArr[indexOfRelevantMap].light +
+                   (currentMap.Water - WaterToLightTuppleArr[indexOfRelevantMap].water);
 
                 }
                 else
@@ -221,9 +227,9 @@ namespace Puzzle_5
                     currentMap.Light = currentMap.Water;
                 }
             }
-            //====================================================light proccess===============================================================//
+            //====================================================temperature proccess===============================================================//
             var lightToTemperatureTextBlock = textBlocks[(int)Maps.light].Value;
-            Console.WriteLine(lightToTemperatureTextBlock);
+            //Console.WriteLine(lightToTemperatureTextBlock);
 
 
             var lightToTemperatureTuppleArr = lightToTemperatureTextBlock.Split("\r\n").
@@ -238,12 +244,14 @@ namespace Puzzle_5
             for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
             {
                 var currentMap = seedToLoactionMapList[i];
+
                 var lightTotemperatureBoolIndexTuple = isLightInRange(lightToTemperatureTuppleArr, currentMap.Light);
                 if (lightTotemperatureBoolIndexTuple.isInRange)
                 {
+                    var indexOfRelevantTuple = (int)lightTotemperatureBoolIndexTuple.index;
 
-                    currentMap.Temperature = lightToTemperatureTuppleArr[(int)lightTotemperatureBoolIndexTuple.index].temperature +
-                   (currentMap.Light - lightToTemperatureTuppleArr[(int)lightTotemperatureBoolIndexTuple.index].light);
+                    currentMap.Temperature = lightToTemperatureTuppleArr[indexOfRelevantTuple].temperature +
+                   (currentMap.Light - lightToTemperatureTuppleArr[indexOfRelevantTuple].light);
 
                 }
                 else
@@ -253,7 +261,7 @@ namespace Puzzle_5
             }
             //=========================================================Humidity Process====================================================//
             var TemperatureToHumidityTextBlock = textBlocks[(int)Maps.temperature].Value;
-            Console.WriteLine(TemperatureToHumidityTextBlock);
+            //Console.WriteLine(TemperatureToHumidityTextBlock);
 
 
             var TemperatureToHumidityTuppleArr = TemperatureToHumidityTextBlock.Split("\r\n").
@@ -268,12 +276,13 @@ namespace Puzzle_5
             for (int i = indexOfFirstRealMap; i < seedToLoactionMapList.Count; i++)
             {
                 var currentMap = seedToLoactionMapList[i];
+
                 var temperatureToHumidityBoolIndexTuple = isTemperatureInRange(TemperatureToHumidityTuppleArr, currentMap.Temperature);
                 if (temperatureToHumidityBoolIndexTuple.isInRange)
                 {
-
-                    currentMap.Humidity = TemperatureToHumidityTuppleArr[(int)temperatureToHumidityBoolIndexTuple.index].humidity +
-                   (currentMap.Temperature - TemperatureToHumidityTuppleArr[(int)temperatureToHumidityBoolIndexTuple.index].temperature);
+                    var indexOfRelevantTuple = (int)temperatureToHumidityBoolIndexTuple.index;
+                    currentMap.Humidity = TemperatureToHumidityTuppleArr[indexOfRelevantTuple].humidity +
+                   (currentMap.Temperature - TemperatureToHumidityTuppleArr[indexOfRelevantTuple].temperature);
 
                 }
                 else
@@ -284,7 +293,7 @@ namespace Puzzle_5
             //========================================location process===============================///
 
             var humidityToLocationTextBlock = textBlocks[(int)Maps.humidity].Value;
-            Console.WriteLine(humidityToLocationTextBlock);
+            //Console.WriteLine(humidityToLocationTextBlock);
 
 
             var humidityToLocationTuppleArr = humidityToLocationTextBlock.Split("\r\n").
@@ -303,9 +312,9 @@ namespace Puzzle_5
 
                 if (humidityToLocationBoolIndexTuple.isInRange)
                 {
-
-                    currentMap.Location = humidityToLocationTuppleArr[(int)humidityToLocationBoolIndexTuple.index].location +
-                   (currentMap.Humidity - humidityToLocationTuppleArr[(int)humidityToLocationBoolIndexTuple.index].humidity);
+                    var inexOfRelevantTuple = (int)humidityToLocationBoolIndexTuple.index;
+                    currentMap.Location = humidityToLocationTuppleArr[inexOfRelevantTuple].location +
+                   (currentMap.Humidity - humidityToLocationTuppleArr[inexOfRelevantTuple].humidity);
 
                 }
                 else
@@ -313,17 +322,24 @@ namespace Puzzle_5
                     currentMap.Location = currentMap.Humidity;
                 }
             }
+
+
+            //===================================================final calaculations===========================================================//
+            seedToLoactionMapList.RemoveRange(0, indexOfFirstRealMap);
+            var list = seedToLoactionMapList.Select(map => map.Location).ToArray().Min();
+            var minimumLOcationMap = seedToLoactionMapList.OrderBy(map => map.Location).First();
+            Console.WriteLine($"the map with the min location starts with seed:{minimumLOcationMap.Seed} and its location is {minimumLOcationMap.Location}");
+
+
+            var number = 1;
             foreach (var map in seedToLoactionMapList)
             {
-                Console.WriteLine("=============================================================\n\n\n");
-                Console.WriteLine($"seed:{map.Seed}=>soil:{map.Soil}=>fertilizer:{map.Fertilizer}=>water:{map.Water}=>light:{map.Light}=>temp:{map.Temperature}=>humidity:{map.Humidity}=>location:{map.Location}");
+                Console.WriteLine("=============================================================\n");
+                Console.WriteLine($"{number++}.seed:{map.Seed}=>soil:{map.Soil}=>fertilizer:{map.Fertilizer}=>water:{map.Water}=>light:{map.Light}=>temp:{map.Temperature}=>humidity:{map.Humidity}=>location:{map.Location}\n");
             }
-            seedToLoactionMapList.RemoveRange(0, indexOfFirstRealMap);
-           
-            var minimumLOcationMap = seedToLoactionMapList.OrderBy(map => map.Location).First();
-            Console.WriteLine($"the map whith the min location starts with seed:{minimumLOcationMap.Seed} and its location is {minimumLOcationMap.Location}");
-            Console.WriteLine(seedToLoactionMapList.Select(map=>map.Location).Min());
-            Console.WriteLine();
+
+
+
 
         }
 
