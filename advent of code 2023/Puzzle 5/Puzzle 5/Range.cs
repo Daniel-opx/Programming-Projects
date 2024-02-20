@@ -69,7 +69,37 @@ namespace Puzzle_5
             dest = dest.OrderBy(s => s.Start).ToList();
             return dest;
         }
+        internal static Range tuppleToRangeConverter((long src, long dst, long skips) currentTuple) =>
+             new Range(currentTuple.src, currentTuple.src + currentTuple.skips - 1) { dstSrcDifference = currentTuple.dst - currentTuple.src };
+        /// <summary>
+        /// static Range class method- compares range a to range b and return the intersection range betweeen a and b,
+        /// </summary>
+        /// <param name="a">
+        /// range a is the range that we want to get the intersection in </param>
+        /// <param name="b"> the range that range a is being compared against </param>
+        /// <returns></returns>
+        internal static Range FindOverlap(Range a, Range b)
+        {
+            if (a.Start >= b.Start && a.End <= b.End) return new Range(a.Start, a.End) { dstSrcDifference = b.dstSrcDifference };
+            /**/
 
-        
+            if (a.Start < b.Start && a.End > b.Start && a.End <= b.End) return new Range(b.Start, a.End) { dstSrcDifference = b.dstSrcDifference };
+            /**/
+            if (a.End == b.Start) return new Range(b.Start, b.Start) { dstSrcDifference = b.dstSrcDifference };
+            /**/
+            if (b.End > a.Start && b.End < a.End && b.Start <= a.Start) return new Range(a.Start, b.End) { dstSrcDifference = b.dstSrcDifference };
+            /**/
+            if (a.Start == b.End) return new Range(a.Start, a.Start) { dstSrcDifference = b.dstSrcDifference };
+            /**/
+            if (a.Start < b.Start && a.End >= b.End) return new Range(b.Start, b.End) { dstSrcDifference = b.dstSrcDifference };
+
+            if (a.Start <= b.Start && a.End > b.End) return new Range(b.Start, b.End) { dstSrcDifference = b.dstSrcDifference };
+
+            return new Range(-5, -5);
+
+
+
+
+        }
     }
 }

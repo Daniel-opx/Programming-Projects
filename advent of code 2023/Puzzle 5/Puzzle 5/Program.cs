@@ -452,11 +452,9 @@ namespace Puzzle_5
                         for (int k = 0; k < srcToDstTuppleArr.Length; k++)
                         {
                             var currentTupple = srcToDstTuppleArr[k];
-                            if (range.Start >= currentTupple.src && range.Start < currentTupple.src + currentTupple.skips - 1
-                                && range.End >= currentTupple.src && range.End < currentTupple.src + currentTupple.skips)
+                            if (range.isRangeOverlapWith(Range.tuppleToRangeConverter(currentTupple)))
                             {
-                                ranges.Add(new Range(range.Start, range.End));
-                                ranges.Last().dstSrcDifference = currentTupple.dst - currentTupple.src;
+                                ranges.Add(Range.FindOverlap( range, Range.tuppleToRangeConverter(currentTupple)));
 
                             }
                         }
@@ -472,12 +470,20 @@ namespace Puzzle_5
                             return rng;
                         }).ToList();
                         ranges.ForEach(rng => { rangePipelineInterim.Add(rng); });
-
+                        ranges.Clear();
 
                     }
+                    if(j ==6)
+                    {
+                        var minimumLcation = rangePipelineInterim.OrderBy(rng => rng.Start).First();
+                        locationRanges.Add(minimumLcation);
+                    }
+                    
 
                 }
             }
+            var bla = locationRanges.OrderBy(rng => rng.Start).First().Start;
+            Console.WriteLine();
         }
 
 
