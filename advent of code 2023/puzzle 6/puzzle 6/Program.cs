@@ -91,7 +91,7 @@ namespace puzzle_6
             {
                 int ListCount = list.Count;
                 double num = 0;
-                int baseOftenPower = list.Count - 1;
+                int baseOftenPower = list.Count - 1; // convert the number of elemnts in list to zero-based counting
 
                 var foo = list.Aggregate(num, (acc, next) => acc + (next * Math.Pow(10, baseOftenPower--)));
                 return foo;
