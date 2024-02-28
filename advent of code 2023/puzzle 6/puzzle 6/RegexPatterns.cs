@@ -10,5 +10,6 @@ namespace puzzle_6
     internal static class RegexPatterns
     {
         public static Regex catchNumbers = new Regex(@"\d+");
+        public static Regex catchEverySingleNum = new Regex(@"\d");
     }
 }

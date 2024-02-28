@@ -8,13 +8,13 @@ namespace puzzle_6
 {
     internal class Coordinate
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
         public Coordinate()
         {
 
         }
-        public Coordinate(int x, int y)
+        public Coordinate(double x, double y)
         {
             this.X = x;
             this.Y = y;
