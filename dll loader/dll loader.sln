@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dll loader", "dll loader\dll loader.csproj", "{D678D1D4-2605-45B3-880A-3ABB98FABB97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A044C205-C95A-44B8-AE94-BB8A21BB9F4E} = {A044C205-C95A-44B8-AE94-BB8A21BB9F4E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{A044C205-C95A-44B8-AE94-BB8A21BB9F4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D678D1D4-2605-45B3-880A-3ABB98FABB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D678D1D4-2605-45B3-880A-3ABB98FABB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D678D1D4-2605-45B3-880A-3ABB98FABB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D678D1D4-2605-45B3-880A-3ABB98FABB97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A044C205-C95A-44B8-AE94-BB8A21BB9F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A044C205-C95A-44B8-AE94-BB8A21BB9F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A044C205-C95A-44B8-AE94-BB8A21BB9F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A044C205-C95A-44B8-AE94-BB8A21BB9F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F52B6EE5-A6E7-48D3-976E-5A96FF901071}
+	EndGlobalSection
+EndGlobal

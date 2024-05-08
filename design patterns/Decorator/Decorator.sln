@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Costum String Builder", "Decorator\Costum String Builder.csproj", "{4707E392-BB60-47C3-A19A-5A3DE26CD51F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter-Decorator", "Adapter-Decorator\Adapter-Decorator.csproj", "{76B42443-079F-4530-977F-4D7F9FF74047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multiuple Inheritance with Interfaces", "multiuple Inheritance with Interfaces\multiuple Inheritance with Interfaces.csproj", "{D32A7347-5FBA-44D7-99E0-4CC1A1C904FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamic Decorator Composition", "Dynamic Decorator Composition\Dynamic Decorator Composition.csproj", "{57B52599-9795-4317-97A2-69E11BAB523D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Detecting Decorator Cycle", "Detecting Decorator Cycle\Detecting Decorator Cycle.csproj", "{866EB47A-7663-47C1-8C83-80FE8CE3D3EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Static Decorator Compsition", "Static Decorator Compsition\Static Decorator Compsition.csproj", "{DAB5374D-FEFE-4ADE-9A4B-B2A4FD1C2E38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4707E392-BB60-47C3-A19A-5A3DE26CD51F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4707E392-BB60-47C3-A19A-5A3DE26CD51F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4707E392-BB60-47C3-A19A-5A3DE26CD51F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4707E392-BB60-47C3-A19A-5A3DE26CD51F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B42443-079F-4530-977F-4D7F9FF74047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B42443-079F-4530-977F-4D7F9FF74047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B42443-079F-4530-977F-4D7F9FF74047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B42443-079F-4530-977F-4D7F9FF74047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D32A7347-5FBA-44D7-99E0-4CC1A1C904FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D32A7347-5FBA-44D7-99E0-4CC1A1C904FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D32A7347-5FBA-44D7-99E0-4CC1A1C904FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D32A7347-5FBA-44D7-99E0-4CC1A1C904FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B52599-9795-4317-97A2-69E11BAB523D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B52599-9795-4317-97A2-69E11BAB523D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B52599-9795-4317-97A2-69E11BAB523D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B52599-9795-4317-97A2-69E11BAB523D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866EB47A-7663-47C1-8C83-80FE8CE3D3EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866EB47A-7663-47C1-8C83-80FE8CE3D3EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866EB47A-7663-47C1-8C83-80FE8CE3D3EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866EB47A-7663-47C1-8C83-80FE8CE3D3EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB5374D-FEFE-4ADE-9A4B-B2A4FD1C2E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB5374D-FEFE-4ADE-9A4B-B2A4FD1C2E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB5374D-FEFE-4ADE-9A4B-B2A4FD1C2E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB5374D-FEFE-4ADE-9A4B-B2A4FD1C2E38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC974585-927C-41E1-95C3-6699D5B78764}
+	EndGlobalSection
+EndGlobal
