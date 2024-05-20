@@ -77,7 +77,7 @@ namespace Reflective_Visitor
         }
     }
 
-    internal class Program
+    internal class ReflectiveVisitorP
     {
         static void Main(string[] args)
         {

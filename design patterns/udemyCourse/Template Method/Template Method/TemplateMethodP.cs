@@ -15,7 +15,7 @@ namespace Template_Method
 
         protected Game(int numberOfPlayers)
         {
-            this.numberOfPlayers = numberOfPlayers;
+            this.numberOfPlayers = numberOfPlayers; 
         }
 
         protected int currentPalyer;

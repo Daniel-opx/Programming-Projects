@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tic tac toe", "tic tac toe\tic tac toe.csproj", "{11E4D0A1-521E-4151-9E53-19BAAAA2CACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tic tac toe", "tic tac toe\tic tac toe.csproj", "{11E4D0A1-521E-4151-9E53-19BAAAA2CACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "form", "form\form.csproj", "{9D6AB200-C5DE-4573-B70C-D6181F8F4996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogic", "GameLogic\GameLogic.csproj", "{04C55FA9-2247-4608-996B-CF55EE5966C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{11E4D0A1-521E-4151-9E53-19BAAAA2CACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11E4D0A1-521E-4151-9E53-19BAAAA2CACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11E4D0A1-521E-4151-9E53-19BAAAA2CACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D6AB200-C5DE-4573-B70C-D6181F8F4996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D6AB200-C5DE-4573-B70C-D6181F8F4996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D6AB200-C5DE-4573-B70C-D6181F8F4996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D6AB200-C5DE-4573-B70C-D6181F8F4996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04C55FA9-2247-4608-996B-CF55EE5966C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04C55FA9-2247-4608-996B-CF55EE5966C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04C55FA9-2247-4608-996B-CF55EE5966C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04C55FA9-2247-4608-996B-CF55EE5966C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

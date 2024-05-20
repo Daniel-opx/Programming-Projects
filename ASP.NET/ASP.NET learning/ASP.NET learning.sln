@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASP.NET learning", "ASP.NET learning\ASP.NET learning.csproj", "{6AC3FD46-DFFA-4622-B0DF-D8F6669286C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C1B6956F-7476-4BDB-BC33-E66242F1A62F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AC3FD46-DFFA-4622-B0DF-D8F6669286C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC3FD46-DFFA-4622-B0DF-D8F6669286C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC3FD46-DFFA-4622-B0DF-D8F6669286C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC3FD46-DFFA-4622-B0DF-D8F6669286C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B6956F-7476-4BDB-BC33-E66242F1A62F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B6956F-7476-4BDB-BC33-E66242F1A62F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B6956F-7476-4BDB-BC33-E66242F1A62F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B6956F-7476-4BDB-BC33-E66242F1A62F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84BF5FD4-36D5-4A0E-9D6B-9709765DD290}
+	EndGlobalSection
+EndGlobal
