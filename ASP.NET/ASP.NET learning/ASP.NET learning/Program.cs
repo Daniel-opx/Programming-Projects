@@ -21,6 +21,8 @@ namespace ASP.NET_learning
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddSingleton<ITaskService>(new InMemoryTaskService());
+
             var app = builder.Build();
             //middleware
             app.UseRewriter(new RewriteOptions().AddRedirect("tasks/(.*)", "todos/$1"));
@@ -33,20 +35,50 @@ namespace ASP.NET_learning
             });
 
             var toDoList = new List<Todo>();
+            ////without the di container
+            //app.MapGet("/todos", () => toDoList);
+            //with di container
+            app.MapGet("/todos", (ITaskService service) => service.GetTodos());
 
-            app.MapGet("/todos", () => toDoList);
 
             app.MapGet("/", () => " World!");
 
-            app.MapGet("/todos/{id}", Results<Ok<Todo>, NotFound> (int id) => //Crud - read
+            ////witout di container
+            //app.MapGet("/todos/{id}", Results<Ok<Todo>, NotFound> (int id) => //Crud - read
+            //{
+            //    var targetTodo = toDoList.SingleOrDefault(t => id == t.ID);
+            //    return targetTodo == null ? TypedResults.NotFound() : TypedResults.Ok(targetTodo);
+            //});
+            //with di container
+            app.MapGet("/todos/{id}", Results<Ok<Todo>, NotFound> (int id,ITaskService service) => //Crud - read
             {
-                var targetTodo = toDoList.SingleOrDefault(t => id == t.ID);
+                var targetTodo = service.GetTodoById(id);
                 return targetTodo == null ? TypedResults.NotFound() : TypedResults.Ok(targetTodo);
             });
 
-            app.MapPost("/todos", (Todo task) => // crud - Create
+            ////without di container
+            //app.MapPost("/todos", (Todo task) => // crud - Create
+            //{
+            //    toDoList.Add(task);
+            //    return TypedResults.Created($"/todos/{task.ID}", task);
+            //})
+            //.AddEndpointFilter(async (context, next) =>
+            //{
+            //    var taskArgument = context.GetArgument<Todo>(0);
+            //    var errors = new Dictionary<string, string[]>();
+            //    if (taskArgument.DueDate < DateTime.UtcNow)
+            //        errors.Add(nameof(Todo.DueDate), ["Cannot have due date in the past"]);
+            //    if (taskArgument.IsComplete)
+            //        errors.Add(nameof(Todo.IsComplete), ["Cannot add complete Todo object"]);
+
+            //    if (errors.Count > 0) return Results.ValidationProblem(errors);
+            //    return await next(context);
+            //});
+
+            //with di container
+            app.MapPost("/todos", (Todo task, ITaskService service) => // crud - Create
             {
-                toDoList.Add(task);
+                service.AddTodo(task);
                 return TypedResults.Created($"/todos/{task.ID}", task);
             })
             .AddEndpointFilter(async (context, next) =>
@@ -61,14 +93,19 @@ namespace ASP.NET_learning
                 if (errors.Count > 0) return Results.ValidationProblem(errors);
                 return await next(context);
             });
-                
 
-            app.MapDelete("/todos/{ID}", (int id) => // CRUD - delete
+            ////without di container
+            //app.MapDelete("/todos/{ID}", (int id) => // CRUD - delete
+            //{
+            //    toDoList.RemoveAll(t => t.ID == id);
+            //    return TypedResults.NoContent();
+            //});
+            //with di container
+            app.MapDelete("/todos/{ID}", (int id,ITaskService service) => // CRUD - delete
             {
-                toDoList.RemoveAll(t => t.ID == id);
+                service.DeleteTodoById(id);
                 return TypedResults.NoContent();
             });
-
 
             app.MapDelete("/todos", () =>
             {
